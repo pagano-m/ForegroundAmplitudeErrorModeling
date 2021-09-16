@@ -282,8 +282,8 @@ class read_1D:
             #we are reading along a fixed beta
             self.along = 'beta'
             self.scafacs = Na
-            self.betas = np.zeros_like(len(self.scafacs)) + beta
-            self.Nfiles = len(len(self.scafacs))
+            self.betas = np.zeros_like(self.scafacs) + beta
+            self.Nfiles = len(self.scafacs)
             self.logZs = np.zeros((self.Nfiles))
         else:
             if isinstance(Na, int):
@@ -306,6 +306,11 @@ class read_1D:
                     r = directories[i].find('Nscafac_')
                     chunk_1 = directories[i][0: int(r) + int(len('Nscafac_'))]
                     chunk_2 = directories[i][int(r) + int(len('Nscafac_')) + 1:-1]
+                    try:
+                        int(directories[i][int(r) + int(len('Nscafac_')) + 2])
+                    except:
+                        print('changing chunk_2')
+                        chunk_2 = directories[i][int(r) + int(len('Nscafac_')) + 2:-1]
                     return chunk_1, chunk_2
                     
             
